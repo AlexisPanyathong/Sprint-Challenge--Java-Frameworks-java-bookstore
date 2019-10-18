@@ -23,5 +23,43 @@ public class Author extends Auditable {
     @JsonIgnoreProperties("author")
     private List<BookAuthors> bookAuthors = new ArrayList<>();
 
+    public Author() {
+    }
 
+    public Author(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public long getAuthorid() {
+        return authorid;
+    }
+
+    public void setAuthorid(long authorid) {
+        this.authorid = authorid;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public List<BookAuthors> getBookAuthors() {
+        return bookAuthors;
+    }
+
+    public void setBookAuthors(List<BookAuthors> bookAuthors) {
+        this.bookAuthors = bookAuthors;
+    }
 }

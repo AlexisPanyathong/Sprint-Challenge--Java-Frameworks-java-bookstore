@@ -1,4 +1,8 @@
 package com.lambdaschool.starthere.repository;
 
-public interface BookRepository {
+import com.lambdaschool.starthere.models.Book;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface BookRepository extends PagingAndSortingRepository<Book, Long>
+{
 }

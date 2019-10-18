@@ -33,9 +33,7 @@ public class BookController
                             "Multiple sort criteria are supported.")})
     @GetMapping(value = "/books",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllBooks(@PageableDefault(page = 0, size = 3)
-                                                  Pageable pageable)
-    {
+    public ResponseEntity<?> listAllBooks(@PageableDefault(page = 0, size = 3) Pageable pageable) {
         List<Book> myBooks = bookService.findAll(pageable);
         return new ResponseEntity<>(myBooks, HttpStatus.OK);
     }

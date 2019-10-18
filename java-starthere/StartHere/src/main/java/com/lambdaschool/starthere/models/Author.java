@@ -14,21 +14,21 @@ public class Author extends Auditable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long authorid;
 
-    private String firstname;
+    private String fname;
 
-    private String lastname;
+    private String lname;
 
     @OneToMany(mappedBy = "author",
                 cascade = CascadeType.ALL)
     @JsonIgnoreProperties("author")
-    private List<BookAuthors> bookAuthors = new ArrayList<>();
+    private List<Wrote> wrote = new ArrayList<>();
 
     public Author() {
     }
 
-    public Author(String firstname, String lastname) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Author(String fname, String lname) {
+        this.fname = fname;
+        this.lname = lname;
     }
 
     public long getAuthorid() {
@@ -39,27 +39,27 @@ public class Author extends Auditable {
         this.authorid = authorid;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFname() {
+        return fname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLname() {
+        return lname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
-    public List<BookAuthors> getBookAuthors() {
-        return bookAuthors;
+    public List<Wrote> getWrote() {
+        return wrote;
     }
 
-    public void setBookAuthors(List<BookAuthors> bookAuthors) {
-        this.bookAuthors = bookAuthors;
+    public void setWrote(List<Wrote> wrote) {
+        this.wrote = wrote;
     }
 }

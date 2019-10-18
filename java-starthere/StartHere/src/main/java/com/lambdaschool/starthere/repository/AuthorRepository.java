@@ -6,12 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface AuthorRepository extends PagingAndSortingRepository<Author, Long>
-{
+public interface AuthorRepository extends PagingAndSortingRepository<Author, Long> {
 
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO bookauthors (bookid, authorid) VALUES (:bookid, :authorid)", nativeQuery = true)
+    @Query(value = "INSERT INTO wrote (bookid, authorid) VALUES (:bookid, :authorid)", nativeQuery = true)
     void insertIntoBookAuthors(long bookid, long authorid);
 }

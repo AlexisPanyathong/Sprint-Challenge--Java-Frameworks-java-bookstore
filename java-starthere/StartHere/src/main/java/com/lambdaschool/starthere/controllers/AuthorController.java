@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,11 +32,10 @@ public class AuthorController
                     value = "Sorting criteria in the format: property(,asc|desc). " +
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.")})
+
     @GetMapping(value = "/authors",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllAuthors(@PageableDefault(page = 0, size = 3)
-                                                    Pageable pageable)
-    {
+    public ResponseEntity<?> listAllAuthors(@PageableDefault(page = 0, size = 3) Pageable pageable) {
         List<Author> myAuthors = authorService.findAll(pageable);
         return new ResponseEntity<>(myAuthors, HttpStatus.OK);
     }

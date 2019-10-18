@@ -1,48 +1,70 @@
 package com.lambdaschool.starthere.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApiModel(value = "Book", description = "TheBook Entity")
+@Loggable
 @Entity
 @Table(name = "book")
-public class Book extends Auditable
-{
+public class Book extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookid;
 
+    @ApiModelProperty(name = "booktitle",
+            value = "Book Title",
+            required = true,
+            example = "Me%20Before%20You")
+    @Column(nullable = false)
     private String title;
 
+    // ISBN
+    @ApiModelProperty(name = "ISBN",
+            value = "The ISBN number of the book",
+            example = "00000000000")
+    @Column(nullable = false,
+            unique = true)
     private String isbn;
 
-    @Column(nullable = true)
+    // copy
+    @ApiModelProperty(name = "copy",
+            value = "The year the book was published (copyright date)",
+            example = "2015")
     private int copy;
 
     @ApiModelProperty(name = "bookAuthors", value = "List of Book Authors")
     @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL)
     @JsonIgnoreProperties("book")
-    private List<BookAuthors> bookAuthors = new ArrayList<>();
+    private List<Wrote> wrote = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "sectionid")
+    @JsonIgnoreProperties("books")
+    private Section section;
 
     public Book()
     {
     }
 
-    public Book(String title, String isbn, int copy, List<BookAuthors> bookAuthors)
+    public Book(String title, String isbn, int copy, List<Wrote> wrote)
     {
         this.title = title;
         this.isbn = isbn;
         this.copy = copy;
 
-        for (BookAuthors ba : bookAuthors)
+        for (Wrote w : wrote)
         {
-            ba.setBook(this);
+            w.setBook(this);
         }
-        this.bookAuthors = bookAuthors;
+        this.wrote = wrote;
     }
 
     public long getBookid()
@@ -85,13 +107,13 @@ public class Book extends Auditable
         this.copy = copy;
     }
 
-    public List<BookAuthors> getBookAuthors()
+    public List<Wrote> getWrote()
     {
-        return bookAuthors;
+        return wrote;
     }
 
-    public void setBookAuthors(List<BookAuthors> bookAuthors)
+    public void setWrote(List<Wrote> wrote)
     {
-        this.bookAuthors = bookAuthors;
+        this.wrote = wrote;
     }
 }

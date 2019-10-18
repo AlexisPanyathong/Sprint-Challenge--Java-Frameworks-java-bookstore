@@ -32,13 +32,11 @@ public class DataController
             @ApiResponse(code = 200, message = "Book Successfully Updated", response = void.class),
             @ApiResponse(code = 404, message = "Book Not Found", response = ErrorDetail.class)
     })
+
+    // localhost:2019/data/books/1
+    // PUT - update book
     @PutMapping(value = "/books/{bookid}")
-    public ResponseEntity<?> updateBook(
-            @RequestBody
-                    Book updateBook,
-            @PathVariable
-                    long bookid)
-    {
+    public ResponseEntity<?> updateBook(@RequestBody Book updateBook, @PathVariable long bookid) {
         bookService.update(updateBook, bookid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -49,9 +47,10 @@ public class DataController
             @ApiResponse(code = 404, message = "Book Not Found", response = ErrorDetail.class),
             @ApiResponse(code = 404, message = "Author Not Found", response = ErrorDetail.class)
     })
+
+    // POST - assign book to author
     @PostMapping(value = "/books/{bookid}/authors/{authorid}", produces = {"application/json"})
-    public ResponseEntity<?> assignBookToAuthor(@PathVariable long bookid, @PathVariable long authorid)
-    {
+    public ResponseEntity<?> assignBookToAuthor(@PathVariable long bookid, @PathVariable long authorid) {
         authorrepos.insertIntoBookAuthors(bookid, authorid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -61,11 +60,10 @@ public class DataController
             @ApiResponse(code = 200, message = "Book Successfully Deleted", response = void.class),
             @ApiResponse(code = 404, message = "Book Not Found", response = ErrorDetail.class)
     })
+
+    // DELETE - book by id
     @DeleteMapping("/books/{bookid}")
-    public ResponseEntity<?> deleteBookById(
-            @PathVariable
-                    long bookid)
-    {
+    public ResponseEntity<?> deleteBookById(@PathVariable long bookid) {
         bookService.delete(bookid);
         return new ResponseEntity<>(HttpStatus.OK);
     }

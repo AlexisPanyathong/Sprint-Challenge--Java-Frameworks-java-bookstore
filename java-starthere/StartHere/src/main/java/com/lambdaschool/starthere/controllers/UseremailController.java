@@ -17,8 +17,7 @@ import java.util.List;
 @Loggable
 @RestController
 @RequestMapping("/useremails")
-public class UseremailController
-{
+public class UseremailController {
     private static final Logger logger = LoggerFactory.getLogger(UseremailController.class);
 
     @Autowired
@@ -28,76 +27,49 @@ public class UseremailController
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/useremails",
                 produces = {"application/json"})
-    public ResponseEntity<?> listAllUseremails(HttpServletRequest request)
-    {
-        logger.trace(request.getMethod()
-                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
+    public ResponseEntity<?> listAllUseremails(HttpServletRequest request) {
+        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<Useremail> allUserEmails = useremailService.findAll();
-        return new ResponseEntity<>(allUserEmails,
-                                    HttpStatus.OK);
+        return new ResponseEntity<>(allUserEmails, HttpStatus.OK);
     }
 
     // http://localhost:2019/useremails/useremail/8
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/useremail/{useremailId}",
                 produces = {"application/json"})
-    public ResponseEntity<?> getUserEmailById(HttpServletRequest request,
-                                              @PathVariable
-                                                      Long useremailId)
-    {
-        logger.trace(request.getMethod()
-                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
+    public ResponseEntity<?> getUserEmailById(HttpServletRequest request, @PathVariable Long useremailId) {
+        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         Useremail ue = useremailService.findUseremailById(useremailId);
-        return new ResponseEntity<>(ue,
-                                    HttpStatus.OK);
+        return new ResponseEntity<>(ue, HttpStatus.OK);
     }
 
 
     // http://localhost:2019/useremails/username/cinnamon
     @GetMapping(value = "/username/{userName}",
                 produces = {"application/json"})
-    public ResponseEntity<?> findUseremailByUserName(HttpServletRequest request,
-                                                     @PathVariable
-                                                             String userName)
-    {
-        logger.trace(request.getMethod()
-                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
+    public ResponseEntity<?> findUseremailByUserName(HttpServletRequest request, @PathVariable String userName) {
+        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        List<Useremail> theUseremails = useremailService.findByUserName(userName,
-                                                                        request.isUserInRole("ADMIN"));
-        return new ResponseEntity<>(theUseremails,
-                                    HttpStatus.OK);
+        List<Useremail> theUseremails = useremailService.findByUserName(userName, request.isUserInRole("ADMIN"));
+        return new ResponseEntity<>(theUseremails, HttpStatus.OK);
     }
 
     // http://localhost:2019/useremails/useremail/8
     @DeleteMapping("/useremail/{useremailid}")
-    public ResponseEntity<?> deleteUserEmailById(HttpServletRequest request,
-                                                 @PathVariable
-                                                         long useremailid)
-    {
-        logger.trace(request.getMethod()
-                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
+    public ResponseEntity<?> deleteUserEmailById(HttpServletRequest request, @PathVariable long useremailid) {
+        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        useremailService.delete(useremailid,
-                                request.isUserInRole("ADMIN"));
+        useremailService.delete(useremailid, request.isUserInRole("ADMIN"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // http://localhost:2019/useremails/useremail/9/email/favbun@hops.local
     @PutMapping("/useremail/{useremailid}/email/{emailaddress}")
-    public ResponseEntity<?> updateUserEmail(HttpServletRequest request,
-                                             @PathVariable
-                                                     long useremailid,
-                                             @PathVariable
-                                                     String emailaddress)
-    {
-        useremailService.update(useremailid,
-                                emailaddress,
-                                request.isUserInRole("ADMIN"));
+    public ResponseEntity<?> updateUserEmail(HttpServletRequest request, @PathVariable long useremailid, @PathVariable String emailaddress) {
+        useremailService.update(useremailid, emailaddress, request.isUserInRole("ADMIN"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // note emails are added through the user process
 }
